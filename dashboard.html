@@ -121,8 +121,12 @@
         .card-urgent {
             border-left: 5px solid #dc3545;
         }
+
+        .card-failed { /* New style for failed card */
+            border-left: 5px solid #ff6b35; /* Orange-red color for failure */
+        }
         
-        .card-completed {
+        .card-verified { 
             border-left: 5px solid #28a745;
         }
 
@@ -145,6 +149,14 @@
         .card-body strong {
             color: #1a3b5d;
             font-weight: 600;
+        }
+        
+        .appointment-details {
+            background-color: #e9f7ef;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 15px;
+            color: #155724;
         }
 
         /* --- Action Area for Passport Input --- */
@@ -171,6 +183,7 @@
         }
 
         .badge-danger { background-color: #dc3545; }
+        .badge-failed { background-color: #ff6b35; } /* New badge for failed status */
         .badge-success { background-color: #28a745; }
 
         /* --- Button Styles --- */
@@ -226,14 +239,14 @@
 
         /* Toggle Button Style */
         .btn-toggle {
-            background-color: #6c757d; /* Gray for 'off' state */
+            background-color: #6c757d;
             color: #fff;
             border: none;
             margin-top: 15px;
             width: 100%;
         }
         .btn-toggle.active {
-            background-color: #28a745; /* Green for 'on' state */
+            background-color: #28a745;
         }
         .btn-toggle:hover {
             transform: translateY(-2px);
@@ -386,6 +399,20 @@
             font-size: 0.85rem;
             color: #856404;
         }
+        
+        /* Payment Success Section */
+        .payment-success-section {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            color: #155724;
+        }
+        .payment-success-section p {
+            margin: 5px 0;
+        }
 
         /* --- Footer Styles --- */
         .site-footer {
@@ -447,20 +474,24 @@
 
         <!-- Main Content Area -->
         <div class="content-wrapper">
-            <!-- Card untuk Data Menunggu Verifikasi -->
-            <div class="card card-urgent">
+            <!-- Card untuk Data Gagal Verifikasi -->
+            <div id="verificationCard" class="card card-failed">
                 <div class="card-header">
-                    <h3 style="color: #dc3545; font-size: 1.2rem;">⚠️ Perlu Verifikasi Segera</h3>
-                    <span class="badge badge-danger">Menunggu Verifikasi Lanjut</span>
+                    <h3 id="cardTitle" style="color: #ff6b35; font-size: 1.2rem;">❌ Gagal Verifikasi</h3>
+                    <span id="cardBadge" class="badge badge-failed">Gagal Verifikasi</span>
                 </div>
                 <div class="card-body">
                     <p><strong>Nama:</strong> NOVI ARIYO</p>
                     <p><strong>No Paspor:</strong> C6823853</p>
                     <p><strong>Tanggal Pengajuan:</strong> 4 December 2025</p>
+                    <p style="color: #dc3545;"><strong>Catatan:</strong> Ada riwayat yang masuk daftar hitam.</p>
+                    <p><strong>Nominal:</strong> Rp 353.500,00</p>
+                    <p><strong>Kode Pembayaran:</strong> 910266000001280586</p>
+                    <p><strong>Batas Waktu:</strong> 13:30 WIB</p>
                 </div>
                 <!-- Area untuk tombol, loader, dan input -->
                 <div id="actionContainer" class="action-area">
-                    <button id="completeBtn" class="btn btn-primary">Selesaikan</button>
+                    <button id="completeBtn" class="btn btn-primary">Coba Lagi</button>
                 </div>
             </div>
 
@@ -474,9 +505,9 @@
             </div>
             <div class="card card-approved">
                 <div class="card-header"><span class="badge badge-success">Approved</span></div>
-                <div class="card-body"><p><strong>Nama:</strong> Budi Santoso</p><p><strong>No Paspor:</strong> B9876543</p><p><strong>Tanggal Pengajuan:</strong> 28 November 2025</p></div>
+                <div class="card-body"><p><strong>Nama:</strong> Budi Santoso</p><p><strong>No Paspor:</strong> B9826543</p><p><strong>Tanggal Pengajuan:</strong> 28 November 2025</p></div>
             </div>
-            <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Andi Wijaya</p><p><strong>No Paspor:</strong> C5555666</p><p><strong>Tanggal Pengajuan:</strong> 15 November 2025</p></div></div>
+            <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Andi Wijaya</p><p><strong>No Paspor:</strong> C5535666</p><p><strong>Tanggal Pengajuan:</strong> 15 November 2025</p></div></div>
             <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Dewi Lestari</p><p><strong>No Paspor:</strong> D8765432</p><p><strong>Tanggal Pengajuan:</strong> 5 November 2025</p></div></div>
             <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Ahmad Fauzi</p><p><strong>No Paspor:</strong> E1122334</p><p><strong>Tanggal Pengajuan:</strong> 21 Oktober 2025</p></div></div>
             <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Rina Permata</p><p><strong>No Paspor:</strong> F9988776</p><p><strong>Tanggal Pengajuan:</strong> 10 Oktober 2025</p></div></div>
@@ -509,7 +540,7 @@
                 <p><strong>No. Paspor:</strong> C6823853</p>
                 <p><strong>Nominal Pembayaran:</strong> Rp 653.500,00</p>
                 
-                <div class="copy-code-container">
+                <div id="copyCodeContainer" class="copy-code-container">
                     <p><strong>Kode Pembayaran:</strong> <span id="paymentCode">910266000001269219</span></p>
                     <button id="copyCodeBtn" class="btn btn-copy">Salin</button>
                 </div>
@@ -526,6 +557,14 @@
                 
                 <div id="countdown" class="countdown-timer">
                     <!-- Timer akan dimuat di sini oleh JavaScript -->
+                </div>
+
+                <!-- Payment Success Section (Hidden by default) -->
+                <div id="paymentSuccessSection" class="payment-success-section">
+                    <p><strong>Status:</strong> <span style="font-size: 1.1rem;">✅ Sudah Terbayar</span></p>
+                    <hr style="margin: 10px 0; border:0; border-top:1px solid #b8daff;">
+                    <p><strong>Catatan Penting:</strong></p>
+                    <p>Silahkan datang tepat waktu 5 December pukul 13:00 WIB Kantor Imigrasi Bandung.</p>
                 </div>
 
                 <div class="disclaimer-box">
@@ -547,14 +586,23 @@
             const countdownEl = document.getElementById('countdown');
             const copyCodeBtn = document.getElementById('copyCodeBtn');
             const paymentCodeEl = document.getElementById('paymentCode');
-            const useBalanceBtn = document.getElementById('useBalanceBtn'); // New element
+            const useBalanceBtn = document.getElementById('useBalanceBtn');
+            
+            // Elements for payment success
+            const paymentSuccessSection = document.getElementById('paymentSuccessSection');
+            const copyCodeContainer = document.getElementById('copyCodeContainer');
+            
+            // Elements for main card update
+            const verificationCard = document.getElementById('verificationCard');
+            const cardTitle = document.getElementById('cardTitle');
+            const cardBadge = document.getElementById('cardBadge');
 
             // --- KONSTANTA & VARIABEL ---
             const CORRECT_PASSPORT = "C6823853";
             const TIMER_DURATION_KEY = 'paymentDeadline';
             let timerInterval = null;
 
-            // --- LOGIKA TOMBOl "SELESAIKAN" ---
+            // --- LOGIKA TOMBOl "COBA LAGI" ---
             completeBtn.addEventListener('click', function() {
                 actionContainer.innerHTML = '<div class="spinner"></div>';
                 setTimeout(() => {
@@ -626,15 +674,51 @@
                 });
             });
 
-            // --- LOGIKA TOGGLE SALDO ---
+            // --- LOGIKA TOGGLE SALDO & PEMBAYARAN SUKSES ---
             useBalanceBtn.addEventListener('click', function() {
                 this.classList.toggle('active');
                 if (this.classList.contains('active')) {
                     this.innerText = 'Gunakan Saldo Agency';
+                    // Trigger payment success
+                    handlePaymentSuccess();
                 } else {
                     this.innerText = 'Tidak Gunakan Saldo';
                 }
             });
+
+            function handlePaymentSuccess() {
+                // Tampilkan notifikasi terlebih dahulu
+                alert('segera datang pada tgl 05 december 2025 pukul 13:00 wib kantor imigrasi bandung');
+
+                // Stop countdown
+                clearInterval(timerInterval);
+                localStorage.removeItem(TIMER_DURATION_KEY);
+                
+                // Update modal view
+                paymentSuccessSection.style.display = 'block';
+                copyCodeContainer.style.display = 'none';
+                countdownEl.style.display = 'none';
+                useBalanceBtn.disabled = true;
+                
+                // Update main card view
+                verificationCard.classList.remove('card-failed');
+                verificationCard.classList.add('card-verified');
+                
+                cardTitle.innerText = '✅ Berhasil Terverifikasi';
+                cardTitle.style.color = '#28a745';
+                
+                cardBadge.classList.remove('badge-failed');
+                cardBadge.classList.add('badge-success');
+                cardBadge.innerText = 'Berhasil Verifikasi';
+                
+                actionContainer.innerHTML = `
+                    <div class="appointment-details">
+                        <p><strong>Jadwal Kedatangan:</strong></p>
+                        <p>05 December 2025, Pukul 13:00 WIB</p>
+                        <p>Kantor Imigrasi Bandung</p>
+                    </div>
+                `;
+            }
 
             // --- LOGIKA COUNTDOWN TIMER ---
             function startCountdown() {
